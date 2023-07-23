@@ -53,7 +53,7 @@ export const useEmployerStore = defineStore("employer", () => {
   };
 
   let deleteEmployer = async (id) => {
-    await db.collection("employers").doc(id).delete();
+    await db.collection("employer").doc(id).delete();
   };
 
   return {

@@ -1,6 +1,7 @@
 <script setup>
 import { ref } from "vue";
 import Download from "@/components/download.vue";
+import Button from "@/components/button.vue";
 const props = defineProps({
   data: Array,
   employee: Array,
@@ -12,6 +13,11 @@ let download = (id) => {
   downloadFile.value = props.data.find((item) => {
     return item.id === id;
   });
+};
+const emit = defineEmits(["deleteItem"]);
+
+let deleteItem = (id) => {
+  emit("deleteItem", id);
 };
 </script>
 <template>
@@ -107,6 +113,9 @@ let download = (id) => {
                 :data="downloadFile"
                 :employee="employee"
               />
+            </th>
+            <th>
+              <Button @deleteItem="deleteItem(item.id)" deleteBtn />
             </th>
           </tr>
         </tbody>

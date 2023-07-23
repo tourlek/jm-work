@@ -3,6 +3,7 @@ import { watchEffect, ref, computed } from "vue";
 import Input from "@/components/input.vue";
 import Dropdown from "@/components/dropdown.vue";
 import Button from "@/components/button.vue";
+import Checkbox from "@/components/checkbox.vue";
 import VueTailwindDatepicker from "vue-tailwind-datepicker";
 import { parse, format } from "date-fns";
 
@@ -16,9 +17,16 @@ const formatter = ref({
   date: "DD MMM YYYY",
   month: "MMM",
 });
+
 let employeeType = ref(true);
 let options = ref(["ชาย", "หญิง"]);
-const emit = defineEmits(["update:modelValue"]);
+let marital = ref([
+  { text: "โสด" },
+  { text: "แต่งงาน" },
+  { text: "หย่า" },
+  { text: "อื่นๆ" },
+]);
+const emit = defineEmits(["update:modelValue", "submit"]);
 const calculateAge = (date) => {
   const parsedDate = parse(date, "dd MMM yyyy", new Date());
   const currentDate = new Date();
@@ -33,9 +41,8 @@ const calculateAge = (date) => {
 
   return (props.data.age = age);
 };
-let submit = (data) => {
-  console.log(data);
 
+let submit = (data) => {
   emit("submit", data);
 };
 watchEffect(() => {
@@ -132,7 +139,7 @@ watchEffect(() => {
 
     <div class="flex gap-3 w-full justify-end mt-5">
       <Button
-        type="primary"
+        type="btn-primary"
         :msg="edit ? 'Edit' : 'Submit'"
         @click="submit(data)"
       />
@@ -168,7 +175,15 @@ watchEffect(() => {
         <Input msg=" อายุ / Age" v-model="data.age" age disabled />
       </div>
       <div class="flex gap-3 w-full">
+        <Checkbox
+          :data="marital"
+          msg="สถาณะ / Marital Status"
+          v-model="data.marital"
+        />
+      </div>
+      <div class="flex gap-3 w-full">
         <Input msg="สัญชาติ / Nationality" v-model="data.nationality" />
+        <Input msg="ประเภทงาน / Type of work" v-model="data.workType" />
         <Dropdown
           msg="เพศ / Gender"
           :options="options"
@@ -248,7 +263,7 @@ watchEffect(() => {
 
     <div class="flex gap-3 w-full justify-end mt-5">
       <Button
-        type="primary"
+        type="btn-primary"
         :msg="edit ? 'Edit' : 'Submit'"
         @click="submit(data)"
       />

@@ -44,7 +44,7 @@ export const useEmployeeStore = defineStore("employees", () => {
 
       if (snapshot.exists) {
         const fetchedData = snapshot.data();
-        employee.value = fetchedData;
+        employee.value = { id: snapshot.id, ...fetchedData };
       } else {
         console.log("employer not found");
       }
