@@ -233,6 +233,48 @@ watchEffect(() => {
     </div>
 
     <div class="bg-white p-10 rounded-md mt-5">
+      <h1 class="text-lg text-left font-semibold">Visa OLD</h1>
+      <div class="flex gap-3 w-full">
+        <Input msg="PASSPORT" v-model="data.passportIdOld" />
+        <Input msg="ออกให้ที่ / Issued At" v-model="data.issuedAtOld" />
+        <Input msg="ประเภท visa" v-model="data.visaTypeOld" />
+      </div>
+      <div class="flex gap-3 w-full">
+        <div class="flex flex-col w-full" v-if="data.startOld">
+          <label class="label">วันที่ออกให้</label>
+          <vue-tailwind-datepicker
+            as-single
+            :formatter="formatter"
+            v-model="data.startOld"
+          />
+        </div>
+        <div class="flex flex-col w-full" v-else>
+          <label class="label">วันที่ออกให้</label>
+          <vue-tailwind-datepicker
+            as-single
+            :formatter="formatter"
+            v-model="data.startOld"
+          />
+        </div>
+        <div class="flex flex-col w-full" v-if="data.endOld">
+          <label class="label">วันหมดอายุ</label>
+          <vue-tailwind-datepicker
+            as-single
+            :formatter="formatter"
+            v-model="data.endOld"
+          />
+        </div>
+        <div class="flex flex-col w-full" v-else>
+          <label class="label">วันหมดอายุ</label>
+          <vue-tailwind-datepicker
+            as-single
+            :formatter="formatter"
+            v-model="data.endOld"
+          />
+        </div>
+      </div>
+    </div>
+    <div class="bg-white p-10 rounded-md mt-5">
       <div class="flex gap-3 w-full">
         <Input msg="tm6" v-model="data.tm6" />
         <Input msg="สถานที่ออก" v-model="data.checkpoint" />
