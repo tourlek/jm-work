@@ -13,7 +13,6 @@ const formattedDate = ref(props.modelValue);
 let restrictInput = (event) => {
   if (props.type === "dateHandle") {
     const allowedChars = /[0-9/]/;
-    console.log(props.modelValue.length);
     if (!allowedChars.test(event.key) || props.modelValue.length === 10) {
       console.log(formattedDate.value);
       event.preventDefault();

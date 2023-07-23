@@ -13,51 +13,71 @@ const store = useEmployeeStore();
 const employer = useEmployerStore();
 const route = useRoute();
 let id = route?.params?.id;
+let employerForm = ref(false);
+let employeeForm = ref(false);
+let loading = ref(true);
+let data = computed(() => store.employee);
+let dataEmployer = computed(() => employer.employer);
 let formData = ref({
   firstName: "",
   lastName: "",
   date: "",
   placeOfBirth: "",
   age: "",
+  marital: "",
   employerId: "",
   nationality: "",
   gender: "",
-  passportId: "",
-  issuedAt: "",
+  workType: "",
   tm6: "",
   checkpoint: "",
+  passportId: "",
+  issuedAt: "",
   start: "",
   end: "",
   visaType: "",
+  passportIdOld: "",
+  issuedAtOld: "",
+  startOld: "",
+  endOld: "",
+  visaTypeOld: "",
   port: "",
   portDate: "",
   transportation: "",
   form: "",
   reason: "",
-  employeeId: id,
+  employeeId: data.value.id,
 });
-let employerForm = ref(false);
-let employeeForm = ref(false);
-let loading = ref(true);
-let data = computed(() => store.employee);
-let dataEmployer = computed(() => employer.employer);
 let patch = async () => {
   loading.value = true;
   try {
     await store.patchEmployee(id, data.value);
+    await employer.fetchEmployer(id);
+    await store.fetchEmployeeId(id);
     loading.value = false;
   } catch (error) {}
 };
+let deleteItem = async (id) => {
+  loading.value = true;
+  try {
+    await employer.deleteEmployer(id);
+    await employer.fetchEmployer(id);
+    await store.fetchEmployeeId(id);
+    loading.value = false;
+  } catch (error) {
+    console.log(error);
+  }
+};
 let submit = async () => {
-  employerForm = true;
   loading.value = true;
   try {
     await employer.postEmployer(formData.value);
     await employer.fetchEmployer(id);
-    employerForm = false;
+    await store.fetchEmployeeId(id);
+    employerForm.value = false;
     loading.value = false;
   } catch (error) {
-    employerForm = false;
+    employerForm.value = false;
   }
 };
 onMounted(async () => {
@@ -73,7 +93,7 @@ onMounted(async () => {
 <template>
   <div v-if="loading"><Loading /></div>
   <Button
-    type="primary-line"
+    type="primary"
     msg="แก้ไขข้อมูล / Edit employee"
     @click="
       employeeForm === false ? (employeeForm = true) : (employeeForm = false)
@@ -92,5 +112,11 @@ onMounted(async () => {
   <div v-if="employerForm">
     <Form :data="formData" @submit="submit" employer />
   </div>
-  <Table :data="dataEmployer" :employee="data" :id="id" employer />
+  <Table
+    :data="dataEmployer"
+    @deleteItem="deleteItem"
+    :employee="data"
+    :id="id"
+    employer
+  />
 </template>

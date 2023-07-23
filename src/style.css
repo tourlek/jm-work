@@ -1,8 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@font-face {
+  font-family: 'Prompt';
+  font-weight: 300;
+  src: url('./assets//fonts/prompt/Prompt-Regular.ttf');
+}
+@font-face {
+  font-family: 'Prompt';
+  font-weight: 700;
+  src: url('./assets//fonts/prompt/Prompt-Bold.ttf');
+}
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: Prompt,Helvetica,  sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
@@ -16,7 +26,6 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 }
-
 
 
 @media (prefers-color-scheme: light) {

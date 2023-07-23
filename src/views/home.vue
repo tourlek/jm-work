@@ -21,6 +21,8 @@ let formData = ref({
       firstName: "",
       lastName: "",
       streetAddress: "",
+      addressNo: "",
+      road: "",
       district: "",
       subDistrict: "",
       provide: "",

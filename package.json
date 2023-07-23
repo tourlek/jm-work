@@ -15,6 +15,7 @@
     "pdfjs-dist": "^3.8.162",
     "pdfmake": "^0.2.7",
     "pinia": "^2.1.4",
+    "svg-to-pdfkit": "^0.1.8",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4",
     "vue-tailwind-datepicker": "^1.4.5"

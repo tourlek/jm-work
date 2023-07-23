@@ -10,6 +10,5 @@ onMounted(async () => {
 });
 </script>
 <template>
-  <h1 class="text-lg text-center">นายจ้างทั้งหมด</h1>
   <Table :data="data" />
 </template>

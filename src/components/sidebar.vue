@@ -1,7 +1,7 @@
 <template>
   <div class="flex">
     <!-- Sidebar -->
-    <aside class="bg-gray-200 text-white w-48 h-screen">
+    <aside class=" text-white w-48 h-screen">
       <nav class="p-5">
         <div>
           <a :class="{ 'active-link': isLinkActive('/') }" href="/"> Home </a>
@@ -16,7 +16,7 @@
         </div>
       </nav>
     </aside>
-    <div class="p-8 w-full overflow-scroll  h-screen max-h-screen main-content">
+    <div class="p-8 w-full overflow-scroll  h-screen max-h-screen main-content bg-gray-200">
       <router-view></router-view>
     </div>
   </div>
