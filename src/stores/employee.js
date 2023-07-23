@@ -5,7 +5,7 @@ import "firebase/compat/firestore";
 
 const db = firebase.firestore();
 
-export const useEmployeeStore = defineStore("employee", () => {
+export const useEmployeeStore = defineStore("employees", () => {
   const employee = ref([]);
 
   let postEmployee = async (data) => {
@@ -14,7 +14,7 @@ export const useEmployeeStore = defineStore("employee", () => {
 
   let patchEmployee = async (id, data) => {
     try {
-      const employerRef = db.collection("employee").doc(id);
+      const employerRef = db.collection("employees").doc(id);
       await employerRef.update(data);
     } catch (error) {
       console.error("Error updating employer:", error);

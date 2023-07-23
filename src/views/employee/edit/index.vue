@@ -45,19 +45,20 @@ let patch = async () => {
   loading.value = true;
   try {
     await store.patchEmployee(id, data.value);
+    await employer.fetchEmployer(id);
     loading.value = false;
   } catch (error) {}
 };
 let submit = async () => {
-  employerForm = true;
   loading.value = true;
   try {
     await employer.postEmployer(formData.value);
     await employer.fetchEmployer(id);
-    employerForm = false;
+    employerForm.value = false;
+    //formData.value = {};
     loading.value = false;
   } catch (error) {
-    employerForm = false;
+    employerForm.value = false;
   }
 };
 onMounted(async () => {
@@ -73,7 +74,7 @@ onMounted(async () => {
 <template>
   <div v-if="loading"><Loading /></div>
   <Button
-    type="primary-line"
+    type="primary"
     msg="แก้ไขข้อมูล / Edit employee"
     @click="
       employeeForm === false ? (employeeForm = true) : (employeeForm = false)
@@ -82,6 +83,7 @@ onMounted(async () => {
   <div :class="{ 'opacity-60 pointer-events-none': !employeeForm }">
     <Form :data="data" @submit="patch" edit />
   </div>
+  {{ employerForm }}
   <Button
     type="primary-line"
     msg="เพิ่มลูกจ้าง / Add employer"

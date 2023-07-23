@@ -14,6 +14,7 @@ let patch = async () => {
   loading.value = true;
   try {
     await store.patchEmployer(id, data.value);
+    await store.fetchEmployerId(id);
     loading.value = false;
   } catch (error) {}
 };

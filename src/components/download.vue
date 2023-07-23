@@ -18,6 +18,9 @@ let submit = async (data) => {
     renderPdf();
   }, 1000);
 };
+let mapAttorney = (key) => {
+  return props.employee.attorney.map((a) => a[key]);
+};
 
 let data = ref({
   firstName: "",
@@ -204,11 +207,31 @@ const exportPdf = () => {
         absolutePosition: { x: 175, y: 77 },
       },
       {
-        text: "นางอธิญากร โชติบัณฑิตย์กุล",
-        absolutePosition: { x: 215, y: 115 },
+        text: mapAttorney("firstName") + "  " + mapAttorney("lastName"),
+        absolutePosition: { x: 215, y: 111 },
       },
       {
-        text: "นางอธิญากร โชติบัณฑิตย์กุล",
+        text: mapAttorney("addressNo"),
+        absolutePosition: { x: 155, y: 151 },
+      },
+      {
+        text: mapAttorney("road"),
+        absolutePosition: { x: 255, y: 151 },
+      },
+      {
+        text: mapAttorney("subDistrict"),
+        absolutePosition: { x: 395, y: 151 },
+      },
+      {
+        text: mapAttorney("district"),
+        absolutePosition: { x: 155, y: 187 },
+      },
+      {
+        text: mapAttorney("provide"),
+        absolutePosition: { x: 395, y: 187 },
+      },
+      {
+        text: mapAttorney("firstName") + "  " + mapAttorney("lastName"),
         absolutePosition: { x: 325, y: 275 },
       },
       //   {
@@ -251,7 +274,7 @@ const exportPdf = () => {
     },
   };
   //pdfMake.createPdf(docDefinition).open({}, window);
-  pdfMake.createPdf(docDefinition).download();
+  //pdfMake.createPdf(docDefinition).download();
 };
 const renderPdf = () => {
   console.log(props.employee);
@@ -282,7 +305,7 @@ const renderPdf = () => {
       class="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
     >
       <li>
-        <a @click="submit">tm6</a>
+        <a @click="submit">tm6 {{ employee.attorney.firstName }}</a>
       </li>
       <li><a>Item 2</a></li>
     </ul>
