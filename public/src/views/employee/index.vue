@@ -1,0 +1,14 @@
+<script setup>
+import { computed, onMounted } from "vue";
+import Table from "@/components/table.vue";
+import { useEmployeeStore } from "@/stores/employee.js";
+
+let store = useEmployeeStore();
+let data = computed(() => store.employee);
+onMounted(async () => {
+  await store.fetchEmployees();
+});
+</script>
+<template>
+  <Table :data="data" />
+</template>
