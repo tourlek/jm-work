@@ -1,0 +1,1 @@
+import{_ as t}from"./table-ce0a312e.js";import{u as o}from"./employee-eabfc88c.js";import{a as r,b as s,o as m,c,u as n}from"./index-dbd23a5d.js";import"./button-f840e959.js";const y={__name:"index",setup(p){let e=o(),a=r(()=>e.employee);return s(async()=>{await e.fetchEmployees()}),(u,_)=>(m(),c(t,{data:n(a)},null,8,["data"]))}};export{y as default};
