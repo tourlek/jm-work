@@ -17,7 +17,7 @@ let deleteItem = (data) => {
   <button
     @click="submit"
     class="btn btn-primary"
-    :class="{ type: type }"
+    :class="!type ? 'btn btn-primary' : type"
     v-if="!deleteBtn"
   >
     {{ msg }}
