@@ -32,9 +32,9 @@ export const useEmployeeStore = defineStore("employees", () => {
         };
       });
       employee.value = fetchedData;
-
-      loading.value = false;
-    } catch (error) {}
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   let fetchEmployeeId = async (employeeId) => {

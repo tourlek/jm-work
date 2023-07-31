@@ -6,6 +6,7 @@ import router from "./routes/index";
 import firebase from "firebase/compat/app"; // Use compat module
 import "firebase/compat/firestore"; // Import Firestore module if you plan to use Firestore
 
+import Cookies from "js-cookie";
 
 import "./style.css";
 const pinia = createPinia();
@@ -22,7 +23,17 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-createApp(App)
-  .use(router)
-  .use(pinia)
-  .mount("#app");
+createApp(App).use(router).use(pinia).mount("#app");
+
+import { useAuthStore } from "./stores/auth.js";
+
+const accessToken = Cookies.get("access_token");
+const uid = Cookies.get("uid");
+const name = Cookies.get("displayName");
+const email = Cookies.get("email");
+const image = Cookies.get("photoURL");
+
+if (accessToken) {
+  const store = useAuthStore();
+  store.setAccessToken(accessToken, uid, name, email, image);
+}

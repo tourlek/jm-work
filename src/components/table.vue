@@ -55,11 +55,10 @@ let deleteItem = (id) => {
             <th>
               <router-link
                 :to="{
-                  name: 'edit-list-employee',
-                  params: { id: item.id || '' },
+                  path: `/edit-employee/${item.id}`,
                 }"
               >
-                <button class="btn btn-ghost btn-xs">View</button>
+                <Button msg="view" :type="'btn btn-ghost'" />
               </router-link>
             </th>
           </tr>
@@ -104,7 +103,7 @@ let deleteItem = (id) => {
                   params: { id: item.id || '' },
                 }"
               >
-                <button class="btn btn-ghost btn-xs">View</button>
+                <Button msg="view" :type="'btn btn-ghost'" />
               </router-link>
             </th>
             <th>

@@ -17,7 +17,6 @@ let patch = async () => {
   try {
     await store.patchEmployer(id, data.value);
     await store.fetchEmployerId(id);
-    console.log(employeeId.value);
     router.push({
       name: `edit-list-employee`,
       params: {
