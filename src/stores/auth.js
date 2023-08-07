@@ -6,6 +6,8 @@ import {
   signOut,
   updateProfile as firebaseUpdateProfile, // Rename the function to avoid conflict with the variable name
 } from "firebase/auth";
+import { toast } from "vue3-toastify";
+
 import Cookies from "js-cookie";
 import { useRouter } from "vue-router";
 
@@ -18,19 +20,25 @@ export const useAuthStore = defineStore("auth", () => {
   let id = ref();
   let profile = ref("");
 
-  let authUser = (email, password) => {
-    signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+  let authUser = async (email, password) => {
+    await signInWithEmailAndPassword(auth, email, password)
+      .then(async (userCredential) => {
         user.value = userCredential.user;
+        if (!user.value.displayName) {
+          user.value.displayName = email;
+        }
         Cookies.set("access_token", user.value.accessToken, { expires: 7 });
         Cookies.set("uid", user.value.uid, { expires: 7 });
         Cookies.set("displayName", user.value.displayName, { expires: 7 });
         Cookies.set("email", user.value.email, { expires: 7 });
         Cookies.set("photoURL", user.value.photoURL, { expires: 7 });
-        router.push({ path: "/home" });
+        router.push("/home");
       })
       .catch((error) => {
-        console.log(error);
+        toast(error.message, {
+          autoClose: 5000,
+          type: "error",
+        });
       });
   };
 
@@ -51,6 +59,7 @@ export const useAuthStore = defineStore("auth", () => {
         Cookies.remove("profile");
         accessToken.value = "";
         profile.value = "";
+        router.push("/login");
       })
       .catch((error) => {
         console.log(error);
@@ -58,7 +67,6 @@ export const useAuthStore = defineStore("auth", () => {
   };
 
   let update = async (name, image) => {
-    console.log(name);
     try {
       await firebaseUpdateProfile(auth.currentUser, {
         displayName: name,
@@ -69,7 +77,10 @@ export const useAuthStore = defineStore("auth", () => {
       Cookies.set("photoURL", auth.currentUser.photoURL, { expires: 7 });
       console.log("Profile updated successfully!", auth.currentUser);
     } catch (error) {
-      console.error("Error updating profile:", error);
+      toast(error.message, {
+        autoClose: 5000,
+        type: "error",
+      });
     }
   };
 

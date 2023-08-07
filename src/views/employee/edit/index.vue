@@ -8,6 +8,7 @@ import Loading from "@/components/loading.vue";
 import { useEmployeeStore } from "@/stores/employee.js";
 import { useEmployerStore } from "@/stores/employer.js";
 import { useRoute } from "vue-router";
+import { toast } from "vue3-toastify";
 
 const store = useEmployeeStore();
 const employer = useEmployerStore();
@@ -46,7 +47,7 @@ let formData = ref({
   transportation: "",
   form: "",
   reason: "",
-  employeeId: data.value.id,
+  employeeId: id,
 });
 let patch = async () => {
   loading.value = true;
@@ -55,7 +56,18 @@ let patch = async () => {
     await employer.fetchEmployer(id);
     await store.fetchEmployeeId(id);
     loading.value = false;
-  } catch (error) {}
+
+    toast("Success", {
+      autoClose: 5000,
+      type: "success",
+    });
+  } catch (error) {
+    loading.value = false;
+    toast(error.message, {
+      autoClose: 5000,
+      type: "error",
+    });
+  }
 };
 let deleteItem = async (id) => {
   loading.value = true;
@@ -64,8 +76,16 @@ let deleteItem = async (id) => {
     await employer.fetchEmployer(id);
     await store.fetchEmployeeId(id);
     loading.value = false;
+    toast("Success", {
+      autoClose: 5000,
+      type: "success",
+    });
   } catch (error) {
-    console.log(error);
+    loading.value = false;
+    toast(error.message, {
+      autoClose: 5000,
+      type: "error",
+    });
   }
 };
 let submit = async () => {
@@ -76,8 +96,17 @@ let submit = async () => {
     await store.fetchEmployeeId(id);
     employerForm.value = false;
     loading.value = false;
+    toast("Success", {
+      autoClose: 5000,
+      type: "success",
+    });
   } catch (error) {
     employerForm.value = false;
+    loading.value = false;
+    toast(error.message, {
+      autoClose: 5000,
+      type: "error",
+    });
   }
 };
 onMounted(async () => {
@@ -86,7 +115,11 @@ onMounted(async () => {
     await employer.fetchEmployer(id);
     loading.value = false;
   } catch (error) {
-    console.error("No employee ID found in route params.", error);
+    loading.value = false;
+    toast(error.message, {
+      autoClose: 5000,
+      type: "error",
+    });
   }
 });
 </script>

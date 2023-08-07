@@ -17,7 +17,10 @@ export const useEmployeeStore = defineStore("employees", () => {
       const employerRef = db.collection("employees").doc(id);
       await employerRef.update(data);
     } catch (error) {
-      console.error("Error updating employer:", error);
+      toast(error.message, {
+        autoClose: 5000,
+        type: "error",
+      });
     }
   };
 

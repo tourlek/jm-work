@@ -19,7 +19,8 @@
     "svg-to-pdfkit": "^0.1.8",
     "vue": "^3.3.4",
     "vue-router": "^4.2.4",
-    "vue-tailwind-datepicker": "^1.4.5"
+    "vue-tailwind-datepicker": "^1.4.5",
+    "vue3-toastify": "^0.1.11"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^4.2.3",

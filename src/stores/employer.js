@@ -8,7 +8,11 @@ const db = firebase.firestore();
 export const useEmployerStore = defineStore("employer", () => {
   const employer = ref([]);
   let postEmployer = async (data) => {
-    await db.collection("employer").add(data);
+    try {
+      await db.collection("employer").add(data);
+    } catch (error) {
+      console.error("Error create employer:", error);
+    }
   };
 
   let patchEmployer = async (employerId, data) => {
@@ -47,7 +51,6 @@ export const useEmployerStore = defineStore("employer", () => {
         console.log("employer not found");
       }
     } catch (error) {
-      // Handle any errors that might occur during the database retrieval.
       console.error("Error fetching employer:", error);
     }
   };
