@@ -3,6 +3,7 @@ defineProps({
   msg: String,
   type: String,
   deleteBtn: Boolean,
+  modal:Boolean
 });
 const emit = defineEmits(["click", "deleteItem"]);
 
@@ -22,7 +23,8 @@ let deleteItem = (data) => {
   >
     {{ msg }}
   </button>
-  <button v-else @click="deleteItem">
+  <button v-else @click="deleteItem"
+  >
     <svg
       xmlns="http://www.w3.org/2000/svg"
       fill="none"

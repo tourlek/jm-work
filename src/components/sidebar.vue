@@ -1,9 +1,6 @@
 <template>
   <div class="flex h-screen">
-    <aside
-      class="max-w-[148px] w-full h-full max-h-screen"
-      v-if="accessToken"
-    >
+    <aside class="max-w-[148px] w-full h-full max-h-screen" v-if="accessToken">
       <nav
         class="p-1 flex flex-col h-full max-h-screen"
         :class="{ 'p-5': !isCollapsed }"
@@ -90,14 +87,67 @@
             </router-link>
           </li>
         </div>
-        <ul class="menu rounded-box p-0 w-full">
+        <div class="menu rounded-box p-0 w-full">
           <li>
-            <router-link to="/profile">Profile</router-link>
+            <router-link to="/profile">
+              <div>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z"
+                  />
+                </svg>
+              </div>
+              <div v-if="!isCollapsed" class="hidden sm:inline">Profile</div>
+            </router-link>
           </li>
           <li>
-            <a @click="logout">Logout</a>
+            <a @click="logout">
+              <div v-if="!isCollapsed">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                  />
+                </svg>
+              </div>
+              <div v-else>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke-width="1.5"
+                  stroke="currentColor"
+                  class="w-6 h-6"
+                >
+                  <path
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    d="M15.75 9V5.25A2.25 2.25 0 0013.5 3h-6a2.25 2.25 0 00-2.25 2.25v13.5A2.25 2.25 0 007.5 21h6a2.25 2.25 0 002.25-2.25V15m3 0l3-3m0 0l-3-3m3 3H9"
+                  />
+                </svg>
+              </div>
+
+              <div v-if="!isCollapsed" class="hidden sm:inline">Logout</div>
+            </a>
           </li>
-        </ul>
+        </div>
       </nav>
     </aside>
     <div
@@ -112,6 +162,7 @@
 import { ref, computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useAuthStore } from "@/stores/auth.js";
+import { toast } from "vue3-toastify";
 
 const store = useAuthStore();
 
@@ -153,7 +204,22 @@ const toggleCollapse = () => {
 
 const routePage = (page) => router.push({ name: page });
 
-const logout = async () => await store.logout();
+const logout = async () => {
+  try {
+    await store.logout();
+    window.location.search = "login";
+  } catch (error) {
+    toast(error.message, {
+      autoClose: 5000,
+      type: "error",
+    });
+  }
+};
 </script>
 
-<style></style>
+<style>
+nav div .router-link-exact-active {
+  background-color: #f9d72f;
+  cursor: pointer;
+}
+</style>

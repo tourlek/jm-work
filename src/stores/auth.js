@@ -32,7 +32,6 @@ export const useAuthStore = defineStore("auth", () => {
         Cookies.set("displayName", user.value.displayName, { expires: 7 });
         Cookies.set("email", user.value.email, { expires: 7 });
         Cookies.set("photoURL", user.value.photoURL, { expires: 7 });
-        router.push("/home");
       })
       .catch((error) => {
         toast(error.message, {
@@ -59,10 +58,12 @@ export const useAuthStore = defineStore("auth", () => {
         Cookies.remove("profile");
         accessToken.value = "";
         profile.value = "";
-        router.push("/login");
       })
       .catch((error) => {
-        console.log(error);
+        toast(error.message, {
+          autoClose: 5000,
+          type: "error",
+        });
       });
   };
 

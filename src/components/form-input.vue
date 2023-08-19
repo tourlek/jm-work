@@ -49,6 +49,11 @@ watchEffect(() => {
   if (props.data.date) {
     calculateAge(props.data?.date);
   }
+  if (employeeType) {
+    props.data.employeeType = true;
+  } else {
+    props.data.employeeType = false;
+  }
 });
 </script>
 <template>

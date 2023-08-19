@@ -41,5 +41,4 @@ if (accessToken) {
 }
 
 app.use(router);
-
 app.mount("#app");

@@ -2,6 +2,7 @@
 import { ref } from "vue";
 import Download from "@/components/download.vue";
 import Button from "@/components/button.vue";
+import Modal from "@/components/modal.vue";
 const props = defineProps({
   data: Array,
   employee: Array,
@@ -21,7 +22,10 @@ let deleteItem = (id) => {
 };
 </script>
 <template>
-  <div class="bg-white p-10 rounded-md mt-5">
+  <div
+    class="bg-white p-10 rounded-md mt-5 h-full overflow-auto"
+    :class="{ ' max-h-[650px]': employer }"
+  >
     <h1 class="text-lg text-left font-semibold">นายจ้างทั้งหมด</h1>
 
     <div class="overflow-x-auto" v-if="!employer">
@@ -58,18 +62,18 @@ let deleteItem = (id) => {
                   path: `/edit-employee/${item.id}`,
                 }"
               >
-                <Button msg="view" :type="'btn btn-ghost'" />
+                <Button msg="Edit" :type="'btn btn-ghost'" />
               </router-link>
             </th>
           </tr>
         </tbody>
       </table>
     </div>
-    <div class="overflow-x-auto" v-else>
+    <div class="" v-else>
       <table class="table">
         <thead>
           <tr>
-            <th></th>
+            <!-- <th></th> -->
             <th>Name</th>
             <th>ID</th>
             <th>Nationality</th>
@@ -77,11 +81,11 @@ let deleteItem = (id) => {
         </thead>
         <tbody v-for="(item, index) in data">
           <tr v-if="item.employeeId === id">
-            <th>
+            <!-- <th>
               <label>
                 <input type="checkbox" class="checkbox" />
               </label>
-            </th>
+            </th> -->
             <td>
               <div class="flex items-center space-x-3">
                 <div>
@@ -114,7 +118,12 @@ let deleteItem = (id) => {
               />
             </th>
             <th>
-              <Button @deleteItem="deleteItem(item.id)" deleteBtn />
+              <Modal
+                :header="`Confirm Deletion of ${item.firstName} ${item.lastName}`"
+                description="Once deleted, this data cannot be restored."
+                :id="item.id"
+                @click="deleteItem(item.id)"
+              ></Modal>
             </th>
           </tr>
         </tbody>

@@ -125,16 +125,19 @@ onMounted(async () => {
 </script>
 <template>
   <div v-if="loading"><Loading /></div>
-  <Button
-    type="primary"
-    msg="แก้ไขข้อมูล / Edit employee"
-    @click="
-      employeeForm === false ? (employeeForm = true) : (employeeForm = false)
-    "
-  />
-  <div :class="{ 'opacity-60 pointer-events-none': !employeeForm }">
-    <Form :data="data" @submit="patch" edit />
+  <div class="mb-5">
+    <Button
+      type="primary"
+      msg="แก้ไขข้อมูล / Edit employee"
+      @click="
+        employeeForm === false ? (employeeForm = true) : (employeeForm = false)
+      "
+    />
+    <div v-if="employeeForm">
+      <Form :data="data" @submit="patch" edit />
+    </div>
   </div>
+
   <Button
     type="primary-line"
     msg="เพิ่มลูกจ้าง / Add employer"
