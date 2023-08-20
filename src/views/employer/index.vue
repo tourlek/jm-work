@@ -2,6 +2,7 @@
 import { ref, computed, onMounted } from "vue";
 import Form from "@/components/form-input.vue";
 import Loading from "@/components/loading.vue";
+import { toast } from "vue3-toastify";
 
 import { useRoute, useRouter } from "vue-router";
 import { useEmployerStore } from "@/stores/employer.js";
@@ -24,7 +25,16 @@ let patch = async () => {
       },
     });
     loading.value = false;
-  } catch (error) {}
+    toast("Success", {
+      autoClose: 5000,
+      type: "success",
+    });
+  } catch (error) {
+    toast(error.message, {
+      autoClose: 5000,
+      type: "error",
+    });
+  }
 };
 onMounted(async () => {
   try {

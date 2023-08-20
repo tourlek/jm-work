@@ -6,9 +6,11 @@ const props = defineProps({
   placeholder: String,
   type: String,
   disabled: Boolean,
+  required: Boolean,
 });
 const emit = defineEmits(["update:modelValue"]);
 const formattedDate = ref(props.modelValue);
+const isFirstFetch = ref(true);
 
 let restrictInput = (event) => {
   if (props.type === "dateHandle") {
@@ -46,7 +48,7 @@ let handleInput = (event) => {
 <template>
   <div class="m-auto w-full">
     <div class="form-control w-full">
-      <label class="label" v-if="msg">
+      <label class="label text-base" v-if="msg">
         <span class="label-text">{{ msg }}</span>
       </label>
       <input
@@ -57,7 +59,11 @@ let handleInput = (event) => {
         @input="handleInput"
         @keypress="restrictInput"
         class="input input-bordered w-full"
+        :class="{ 'border-red-500': required && !modelValue }"
       />
     </div>
+    <sup class="text-red-500" v-if="required && !modelValue"
+      >กรุณากรอก {{ msg }}</sup
+    >
   </div>
 </template>

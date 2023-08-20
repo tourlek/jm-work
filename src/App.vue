@@ -1,6 +1,5 @@
 <script setup>
 import { computed } from "vue";
-import Auth from "@/components/auth.vue";
 import Sidebar from "@/components/sidebar.vue";
 import { useAuthStore } from "@/stores/auth.js";
 const store = useAuthStore();
@@ -8,8 +7,7 @@ let accessToken = computed(() => store.accessToken);
 </script>
 
 <template>
-  <Sidebar v-if="accessToken" />
-  <Auth v-if="!accessToken" />
+  <Sidebar />
 </template>
 
 <style scoped>

@@ -9,8 +9,11 @@ import "firebase/compat/firestore"; // Import Firestore module if you plan to us
 import Cookies from "js-cookie";
 
 import "./style.css";
+import "vue3-toastify/dist/index.css";
+
 const pinia = createPinia();
 // Import Firebase
+
 const firebaseConfig = {
   apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
@@ -23,17 +26,19 @@ const firebaseConfig = {
 
 // Initialize Firebase
 firebase.initializeApp(firebaseConfig);
-createApp(App).use(router).use(pinia).mount("#app");
+const app = createApp(App);
 
+app.use(pinia);
 import { useAuthStore } from "./stores/auth.js";
-
 const accessToken = Cookies.get("access_token");
 const uid = Cookies.get("uid");
 const name = Cookies.get("displayName");
 const email = Cookies.get("email");
 const image = Cookies.get("photoURL");
-
 if (accessToken) {
   const store = useAuthStore();
   store.setAccessToken(accessToken, uid, name, email, image);
 }
+
+app.use(router);
+app.mount("#app");
