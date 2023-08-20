@@ -1,0 +1,1 @@
+import{Q as o,o as e,c as n,b as s}from"./index-ae08a8a1.js";const t={},a={class:"loading-container"},c=s("span",{class:"loading loading-dots loading-lg m-auto"},null,-1),_=[c];function d(i,l){return e(),n("div",a,_)}const g=o(t,[["render",d]]);export{g as L};
